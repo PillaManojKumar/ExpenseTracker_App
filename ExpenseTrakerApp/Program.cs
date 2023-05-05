@@ -4,7 +4,7 @@
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public DateTime Date { get; set; }
 
         public override string ToString()
@@ -15,23 +15,22 @@
 
     class Expense : Transaction
     {
-        public Expense(string title, string description, decimal amount, DateTime date)
+        public Expense(string title, string description, double amount, DateTime date)
         {
             Title = title;
             Description = description;
-            Amount = -Math.Abs(amount);
+            Amount = amount;
             Date = date;
         }
     }
 
     class Income : Transaction
     {
-        public Income(string title, string description,
-        decimal amount, DateTime date)
+        public Income(string title, string description, double amount, DateTime date)
         {
             Title = title;
             Description = description;
-            Amount = Math.Abs(amount);
+            Amount = amount;
             Date = date;
         }
     }
@@ -98,8 +97,8 @@
             Console.Write("Description: ");
             string description = Console.ReadLine();
             Console.Write("Enter Amount: ");
-            decimal amount;
-            if (decimal.TryParse(Console.ReadLine(), out amount))
+            double amount;
+            if (double.TryParse(Console.ReadLine(), out amount))
             {
                 Console.Write("Enter Date (dd/mm/yyyy): ");
                 DateTime date;
@@ -116,6 +115,7 @@
                     }
                     transactions.Add(transaction);
                     Console.WriteLine("Transaction Added Successfully!");
+                    Console.WriteLine("-----------------------------------------------");
                 }
                 else
                 {
@@ -154,14 +154,12 @@
 
         public void CheckBalance()
         {
-            decimal balance = 0;
+            double balance = 0;
             foreach (Transaction transaction in transactions)
             {
                 balance += transaction.Amount;
             }
             Console.WriteLine($"Available Balance: {balance}");
         }
-    }
-
-    
+    }    
 }
